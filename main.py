@@ -87,6 +87,30 @@ def whatNumIsThis(filePath):
     x = Counter(matchedAr)
     print(x)
 
+
+    graphX = []
+    graphY = []
+
+    for eachThing in x:
+        print(eachThing)
+        graphX.append(eachThing)
+        print(x[eachThing])
+        graphY.append(x[eachThing])
+
+    fig = plt.figure()
+    ax1 = plt.subplot2grid((4,4), (0,0), rowspan=1, colspan=4)
+    ax2 = plt.subplot2grid((4,4), (1,0), rowspan=1, colspan=4)
+
+    ax1.imshow(iar)
+    ax2.bar(graphX, graphY, align="center")
+    plt.ylim(400)
+
+    xloc = plt.MaxNLocator(12)
+
+    ax2.xaxis_set_major_locator(xloc)
+
+    plt.show()
+
 i = Image.open("images/numbers/0.1.png")
 iar = np.array(i)
 
