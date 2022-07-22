@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from collections import Counter
 
 
 def createExmaples():
@@ -21,7 +22,6 @@ def createExmaples():
 
             lineToWrite = str(eachNum) + "::" + eiar1 + "\n"
             numberArrayExamples.write(lineToWrite)
-createExmaples()
 
 # i = Image.open("images/numbers/y0.4.png")
 # iar = np.asarray(i)
@@ -53,6 +53,39 @@ def threshold(imageArray):
                 eachPix[2] = 0
                 eachPix[3] = 255
     return newAr
+
+
+def whatNumIsThis(filePath):
+    matchedAr = []
+    loadExamps = open("numberEx.txt", "r").read()
+    loadExamps = loadExamps.split("\n")
+
+    i = Image.open(filePath)
+    iar = np.array(i)
+    iarl = iar.tolist()
+
+    inQuestion = str(iarl)
+
+    for eachExample in loadExamps:
+        if len(eachExample) > 3:
+            splitEx = eachExample.split("::")
+            currentNum = splitEx[0]
+            currentAr = splitEx[1]
+
+            eachPixEx = currentAr.split('],')
+
+            eachPixInQ = inQuestion.split("],")
+
+            x = 0
+
+            while x < len(eachPixEx):
+                if eachPixEx[x] == eachPixInQ[x]:
+                    matchedAr.append(int(currentNum))
+                x += 1
+
+    print(matchedAr)
+    x = Counter(matchedAr)
+    print(x)
 
 i = Image.open("images/numbers/0.1.png")
 iar = np.array(i)
